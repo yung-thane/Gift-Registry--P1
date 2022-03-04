@@ -10,11 +10,16 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class App {
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException{
+        //Connect to DB, telling connection object to connect to H2 DB in memory, but initialize by running script found from classpath: schema.sql
+        Connection connection = DriverManager.getConnection("jdbc:h2:mem:test:INIT=runscript from 'classpath:schema.sql'", "sa", "");
 
-        //Makes new Tomcat server.
+        //Makes and runs new Tomcat server.
         Tomcat server = new Tomcat();
         //Starts up localhost:8080 http connector
         server.getConnector();
@@ -37,6 +42,7 @@ public class App {
                 //a parameter and saves it to a String named mimeType.
                 String mimeType = getServletContext().getMimeType(filename);
                 //Copies our input stream named file to a response output stream which is then displayed to us.
+                resp.setContentType(mimeType);
                 IOUtils.copy(file,resp.getOutputStream());
             }
             //Handles anything that comes after the slash, the * signifies anything.
