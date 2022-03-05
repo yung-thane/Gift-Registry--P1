@@ -43,6 +43,20 @@ public class App {
                     resp.setContentType("application/json");
                     resp.getWriter().println(results);
             }
+            @Override
+            protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+                    throws ServletException, IOException {
+                //Makes a new ObjectMapper named mapper and uses it with readValue(Input Stream, Type) to make a String named newArtist from the input sent by the Post.
+                ObjectMapper mapper = new ObjectMapper();
+                String newArtist = mapper.readValue(req.getInputStream(), String.class);
+                try {
+                    PreparedStatement connection.prepareStatement("insert into 'artist' values(?, ?)")
+                    .setInt(1, 3);
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         };
 
         //Makes and runs new Tomcat server.

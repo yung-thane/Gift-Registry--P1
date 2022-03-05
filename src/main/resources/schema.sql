@@ -18,3 +18,8 @@ CREATE TABLE "album"(
 );
 
 CREATE INDEX "IFK_AlbumArtistId" ON "album" ("ArtistId");
+
+/*Inserting elements into the database.
+*/
+INSERT INTO "artist" VALUES (1, 'AC/DC');
+INSERT INTO "artist" VALUES (2, 'Aerosmith');
