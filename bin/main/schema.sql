@@ -1,7 +1,7 @@
 CREATE TABLE "artist" (
-    "AristId" INT PRIMARY KEY NOT NULL,
+    "ArtistId" INT PRIMARY KEY NOT NULL,
     "Name" VARCHAR 
-)
+);
 
 CREATE TABLE "album"(
     "AlbumId" INT NOT NULL,
@@ -15,6 +15,6 @@ CREATE TABLE "album"(
     the "ArtistId" column variable which is in the "Artist" TABLE. This table  cannot be deleted or updated.  
     */
     CONSTRAINT "FK_AlbumArtistId" FOREIGN KEY ("ArtistId") REFERENCES "artist" ("ArtistId") ON DELETE NO ACTION ON UPDATE NO ACTION
-)
+);
 
-CREATE INDEX "IFK_AlbumArtistId" ON "Album" ("ArtistId");
+CREATE INDEX "IFK_AlbumArtistId" ON "album" ("ArtistId");
