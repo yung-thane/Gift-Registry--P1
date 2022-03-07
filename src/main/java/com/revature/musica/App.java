@@ -21,20 +21,26 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-class Artist{
-    private int artistId;
+class Item{
+    private int itemId;
     private String name;
-    public Artist(int artistId, String name) {
-        this.artistId = artistId;
+    private int buyAvg;
+    private int sellAvg;
+    private int profit = sellAvg - buyAvg;
+    public Item(int itemId, String name, int buyAvg, int sellAvg) {
+        this.itemId = itemId;
         this.name = name;
+        this.buyAvg = buyAvg;
+        this.sellAvg = sellAvg;
+        this.profit = this.sellAvg - this.buyAvg;
     }
-    public Artist() {
+    public Item() {
     }
-    public int getArtistId() {
-        return artistId;
+    public int getItemId() {
+        return itemId;
     }
-    public void setArtistId(int artistId) {
-        this.artistId = artistId;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
     public String getName() {
         return name;
@@ -42,10 +48,30 @@ class Artist{
     public void setName(String name) {
         this.name = name;
     }
+    public int getBuyAvg() {
+        return buyAvg;
+    }
+    public void setBuyAvg(int buyAvg) {
+        this.buyAvg = buyAvg;
+    }
+    public int getSellAvg() {
+        return sellAvg;
+    }
+    public void setSellAvg(int sellAvg) {
+        this.sellAvg = sellAvg;
+    }
+    public int getProfit() {
+        return profit;
+    }
+    public void setProfit(int profit) {
+        this.profit = profit;
+    }
     @Override
     public String toString() {
-        return "Artist [artistId=" + artistId + ", name=" + name + "]";
+        return "Item [buyAvg=" + buyAvg + ", itemId=" + itemId + ", name=" + name + ", profit=" + profit + ", sellAvg="
+                + sellAvg + "]";
     }
+
     
 }
 
@@ -58,27 +84,27 @@ public class App {
 
 
 
-        //Makes new Http servlet named ArtistServlet
-        HttpServlet artistServlet = new HttpServlet() {
+        //Makes new Http servlet named ItemServlet
+        HttpServlet itemServlet = new HttpServlet() {
             
 
 
             @Override
             protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                     throws ServletException, IOException {
-                        List<Artist> artists = new ArrayList<>();
+                        List<Item> items = new ArrayList<>();
                         try {
                             //Creates result set.
-                            ResultSet rs = connection.prepareStatement("Select * from artist").executeQuery();
+                            ResultSet rs = connection.prepareStatement("Select * from item").executeQuery();
                             while(rs.next()){
-                                artists.add(new Artist(rs.getInt("ArtistId"), rs.getString("Name")));
+                                items.add(new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getInt("buyAvg"), rs.getInt("sellAvg")));
                             }
                 } catch (SQLException e) {
                     System.err.println("Failed to retrieve from db: " + e.getSQLState());;
                 }
-                    //Get a JSON Mapper, we then use the mapper.writeValueAsString to convert our artists object into a JSON string and then print it to the response.
+                    //Get a JSON Mapper, we then use the mapper.writeValueAsString to convert our items object into a JSON string and then print it to the response.
                     ObjectMapper mapper = new ObjectMapper();
-                    String results = mapper.writeValueAsString(artists);
+                    String results = mapper.writeValueAsString(items);
                     resp.setContentType("application/json");
                     resp.getWriter().println(results);
             }
@@ -87,12 +113,15 @@ public class App {
                     throws ServletException, IOException {
                 //Makes a new ObjectMapper named mapper and uses it with readValue(Input Stream, Type) to make a String named newArtist from the input sent by the Post.
                 ObjectMapper mapper = new ObjectMapper();
-                Artist newArtist = mapper.readValue(req.getInputStream(), Artist.class);
-                
+                Item newItem = mapper.readValue(req.getInputStream(), Item.class);
+
                 try {
-                    PreparedStatement stmt = connection.prepareStatement("insert into 'artist' values(?, ?)");
-                    stmt.setInt(1, newArtist.getArtistId());
-                    stmt.setString(2, newArtist.getName());
+                    PreparedStatement stmt = connection.prepareStatement("insert into 'item' values(?, ?, ?, ?)");
+                    stmt.setInt(1, newItem.getItemId());
+                    stmt.setString(2, newItem.getName());
+                    stmt.setInt(3, newItem.getBuyAvg());
+                    stmt.setInt(4, newItem.getSellAvg());
+                    stmt.setInt(5, newItem.getProfit());
                     //Can't forget to execute statement, or it will just not happen.
                     stmt.executeUpdate();
                 } catch (SQLException e) {
@@ -130,7 +159,7 @@ public class App {
             //Handles anything that comes after the slash, the * signifies anything.
         }).addMapping("/*");
         
-        server.addServlet("", "artistServlet", artistServlet).addMapping("/artists");
+        server.addServlet("", "itemServlet", itemServlet).addMapping("/items");
 
         //Attempts to start the server, surrounded by try/catch to handle any exceptions.
         try {
