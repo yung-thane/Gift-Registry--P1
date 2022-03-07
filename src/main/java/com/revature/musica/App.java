@@ -86,9 +86,7 @@ public class App {
 
         //Makes new Http servlet named ItemServlet
         HttpServlet itemServlet = new HttpServlet() {
-            
-
-
+        
             @Override
             protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                     throws ServletException, IOException {
@@ -116,7 +114,7 @@ public class App {
                 Item newItem = mapper.readValue(req.getInputStream(), Item.class);
 
                 try {
-                    PreparedStatement stmt = connection.prepareStatement("insert into 'item' values(?, ?, ?, ?)");
+                    PreparedStatement stmt = connection.prepareStatement("insert into 'item' values(?, ?, ?, ?, ?)");
                     stmt.setInt(1, newItem.getItemId());
                     stmt.setString(2, newItem.getName());
                     stmt.setInt(3, newItem.getBuyAvg());
