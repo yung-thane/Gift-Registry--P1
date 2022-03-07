@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,24 +20,62 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
+class Artist{
+    private int artistId;
+    private String name;
+    public Artist(int artistId, String name) {
+        this.artistId = artistId;
+        this.name = name;
+    }
+    public Artist() {
+    }
+    public int getArtistId() {
+        return artistId;
+    }
+    public void setArtistId(int artistId) {
+        this.artistId = artistId;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    @Override
+    public String toString() {
+        return "Artist [artistId=" + artistId + ", name=" + name + "]";
+    }
+    
+}
+
+
 public class App {
     public static void main(String[] args) throws SQLException{
         //Connect to DB, telling connection object to connect to H2 DB in memory, but initialize by running script found from classpath: schema.sql
         Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;INIT=runscript from 'classpath:schema.sql'", "sa", "");
-        //Creates result set.
-        ResultSet rs = connection.prepareStatement("Select * from artist").executeQuery();
-        List<String> artists = new ArrayList<>();
-        while(rs.next()){
-            artists.add(rs.getString("Name"));
-        }
+     
 
 
 
         //Makes new Http servlet named ArtistServlet
         HttpServlet artistServlet = new HttpServlet() {
+            
+
+
             @Override
             protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                     throws ServletException, IOException {
+                        List<Artist> artists = new ArrayList<>();
+                        try {
+                            //Creates result set.
+                            ResultSet rs = connection.prepareStatement("Select * from artist").executeQuery();
+                            while(rs.next()){
+                                artists.add(new Artist(rs.getInt("ArtistId"), rs.getString("Name")));
+                            }
+                } catch (SQLException e) {
+                    System.err.println("Failed to retrieve from db: " + e.getSQLState());;
+                }
                     //Get a JSON Mapper, we then use the mapper.writeValueAsString to convert our artists object into a JSON string and then print it to the response.
                     ObjectMapper mapper = new ObjectMapper();
                     String results = mapper.writeValueAsString(artists);
@@ -48,13 +87,16 @@ public class App {
                     throws ServletException, IOException {
                 //Makes a new ObjectMapper named mapper and uses it with readValue(Input Stream, Type) to make a String named newArtist from the input sent by the Post.
                 ObjectMapper mapper = new ObjectMapper();
-                String newArtist = mapper.readValue(req.getInputStream(), String.class);
+                Artist newArtist = mapper.readValue(req.getInputStream(), Artist.class);
+                
                 try {
-                    PreparedStatement connection.prepareStatement("insert into 'artist' values(?, ?)")
-                    .setInt(1, 3);
+                    PreparedStatement stmt = connection.prepareStatement("insert into 'artist' values(?, ?)");
+                    stmt.setInt(1, newArtist.getArtistId());
+                    stmt.setString(2, newArtist.getName());
+                    //Can't forget to execute statement, or it will just not happen.
+                    stmt.executeUpdate();
                 } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    System.err.println("Failed to insert: " + e.getMessage());
                 }
             }
         };
