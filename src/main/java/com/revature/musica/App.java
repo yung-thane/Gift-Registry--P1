@@ -24,15 +24,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 class Item{
     private int itemId;
     private String name;
-    private int buyAvg;
-    private int sellAvg;
-    private int profit = sellAvg - buyAvg;
-    public Item(int itemId, String name, int buyAvg, int sellAvg) {
+
+    public Item(int itemId, String name) {
         this.itemId = itemId;
         this.name = name;
-        this.buyAvg = buyAvg;
-        this.sellAvg = sellAvg;
-        this.profit = this.sellAvg - this.buyAvg;
     }
     public Item() {
     }
@@ -48,31 +43,11 @@ class Item{
     public void setName(String name) {
         this.name = name;
     }
-    public int getBuyAvg() {
-        return buyAvg;
-    }
-    public void setBuyAvg(int buyAvg) {
-        this.buyAvg = buyAvg;
-    }
-    public int getSellAvg() {
-        return sellAvg;
-    }
-    public void setSellAvg(int sellAvg) {
-        this.sellAvg = sellAvg;
-    }
-    public int getProfit() {
-        return profit;
-    }
-    public void setProfit(int profit) {
-        this.profit = profit;
-    }
     @Override
     public String toString() {
-        return "Item [buyAvg=" + buyAvg + ", itemId=" + itemId + ", name=" + name + ", profit=" + profit + ", sellAvg="
-                + sellAvg + "]";
+        return "Item [itemId=" + itemId + ", name=" + name + "]";
     }
-
-    
+   
 }
 
 
@@ -86,16 +61,15 @@ public class App {
 
         //Makes new Http servlet named ItemServlet
         HttpServlet itemServlet = new HttpServlet() {
-        
             @Override
             protected void doGet(HttpServletRequest req, HttpServletResponse resp)
                     throws ServletException, IOException {
                         List<Item> items = new ArrayList<>();
                         try {
                             //Creates result set.
-                            ResultSet rs = connection.prepareStatement("Select * from item").executeQuery();
+                            ResultSet rs = connection.prepareStatement("Select * from Item").executeQuery();
                             while(rs.next()){
-                                items.add(new Item(rs.getInt("ItemId"), rs.getString("Name"), rs.getInt("buyAvg"), rs.getInt("sellAvg")));
+                                items.add(new Item(rs.getInt("ItemId"), rs.getString("Name")));
                             }
                 } catch (SQLException e) {
                     System.err.println("Failed to retrieve from db: " + e.getSQLState());;
@@ -112,14 +86,12 @@ public class App {
                 //Makes a new ObjectMapper named mapper and uses it with readValue(Input Stream, Type) to make a String named newArtist from the input sent by the Post.
                 ObjectMapper mapper = new ObjectMapper();
                 Item newItem = mapper.readValue(req.getInputStream(), Item.class);
+                System.out.println(newItem);
 
                 try {
-                    PreparedStatement stmt = connection.prepareStatement("insert into 'item' values(?, ?, ?, ?, ?)");
+                    PreparedStatement stmt = connection.prepareStatement("insert into 'item' values(?, ?)");
                     stmt.setInt(1, newItem.getItemId());
                     stmt.setString(2, newItem.getName());
-                    stmt.setInt(3, newItem.getBuyAvg());
-                    stmt.setInt(4, newItem.getSellAvg());
-                    stmt.setInt(5, newItem.getProfit());
                     //Can't forget to execute statement, or it will just not happen.
                     stmt.executeUpdate();
                 } catch (SQLException e) {
@@ -132,7 +104,6 @@ public class App {
         Tomcat server = new Tomcat();
         //Starts up localhost:8080 http connector
         server.getConnector();
-
         server.addContext("", null);
         //Essentially gives us the portion of a web address after the main website name and slash. google.com/ThisPartHere
         //When empty, we can set to as our default, it's the first thing seen when someone just types the google.com portion.
