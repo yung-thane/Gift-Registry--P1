@@ -1,4 +1,4 @@
-var welcomeMsg = 'Hello, World!'
+var welcomeMsg = 'Hello, Worldees!'
 
 document.querySelector('h1').innerText = welcomeMsg
 
