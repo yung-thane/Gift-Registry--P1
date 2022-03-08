@@ -15,3 +15,4 @@ CREATE INDEX "IFK_CartItemId" ON "cart" ("ItemId");
 
 INSERT INTO "item" VALUES (1, 'AC/DC');
 INSERT INTO "item" VALUES (2, 'Aerosmith');
+INSERT INTO "item" VALUES (3, 'Baby Bouncer');
