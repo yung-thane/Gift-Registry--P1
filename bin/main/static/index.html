@@ -7,6 +7,11 @@
 </head>
 <body>
     <h1>asdasf</h1>
+    <form action="/items" method="post">
+        Id: <input type="number" name="itemId" id="itemId"/>
+        Name: <input type="text" name="name" id="name"/>
+        <button type="button" onclick="postItem()">Add Item</button>
+    </form>
     <div id="items"></div>
     <script src="main.js"></script>
 </body>
