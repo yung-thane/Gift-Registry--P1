@@ -54,11 +54,12 @@ class Item{
 public class App {
     public static void main(String[] args) throws SQLException{
         //Connect to DB, telling connection object to connect to H2 DB in memory, but initialize by running script found from classpath: schema.sql
-        Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;INIT=runscript from 'classpath:schema.sql'", "sa", "");
+        //String url = "jdbc:h2:mem:test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;INIT=runscript from 'classpath:schema.sql'";
+        String url = "jdbc:postgresql://localhost:5432/";
+        String username = "postgres";
+        String password = "postgres";
+        Connection connection = DriverManager.getConnection(url, username, password);
      
-
-
-
         //Makes new Http servlet named ItemServlet
         HttpServlet itemServlet = new HttpServlet() {
             @Override
