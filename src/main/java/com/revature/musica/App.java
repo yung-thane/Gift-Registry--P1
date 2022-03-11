@@ -55,7 +55,7 @@ public class App {
     public static void main(String[] args) throws SQLException{
         //Connect to DB, telling connection object to connect to H2 DB in memory, but initialize by running script found from classpath: schema.sql
         //String url = "jdbc:h2:mem:test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;INIT=runscript from 'classpath:schema.sql'";
-        String url = "jdbc:postgresql://localhost:5432/";
+        String url = "jdbc:postgresql://musica-db:5432/postgres";
         String username = "postgres";
         String password = "postgres";
         Connection connection = DriverManager.getConnection(url, username, password);
