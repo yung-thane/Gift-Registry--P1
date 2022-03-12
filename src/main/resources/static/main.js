@@ -40,3 +40,8 @@ function postItem(){
         }
     );
 }
+
+let button = document.querySelector('button');
+button.addEventListener('mouseenter', function() {
+    button.textContent = "Go!";
+})
