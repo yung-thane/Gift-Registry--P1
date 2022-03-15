@@ -60,6 +60,7 @@ public class App {
         String password = "postgres";
         Connection connection = DriverManager.getConnection(url, username, password);
      
+        
         //Makes new Http servlet named ItemServlet
         HttpServlet itemServlet = new HttpServlet() {
             @Override
@@ -101,6 +102,48 @@ public class App {
             }
         };
 
+
+                //Makes new Http servlet named cartServlet
+                HttpServlet cartServlet = new HttpServlet() {
+                    @Override
+                    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+                            throws ServletException, IOException {
+                                List<Item> items = new ArrayList<>();
+                                try {
+                                    //Creates result set.
+                                    ResultSet rs = connection.prepareStatement("Select * from Cart").executeQuery();
+                                    while(rs.next()){
+                                        items.add(new Item(rs.getInt("ItemId"), rs.getString("Name")));
+                                    }
+                        } catch (SQLException e) {
+                            System.err.println("Failed to retrieve from db: " + e.getSQLState());;
+                        }
+                            //Get a JSON Mapper, we then use the mapper.writeValueAsString to convert our items object into a JSON string and then print it to the response.
+                            ObjectMapper mapper = new ObjectMapper();
+                            String results = mapper.writeValueAsString(items);
+                            resp.setContentType("application/json");
+                            resp.getWriter().println(results);
+                    }
+                    @Override
+                    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+                            throws ServletException, IOException {
+                        //Makes a new ObjectMapper named mapper and uses it with readValue(Input Stream, Type) to make a String named newArtist from the input sent by the Post.
+                        ObjectMapper mapper = new ObjectMapper();
+                        Item newItem = mapper.readValue(req.getInputStream(), Item.class);
+                        System.out.println(newItem);
+        
+                        try {
+                            PreparedStatement stmt = connection.prepareStatement("insert into Cart values(?, ?)");
+                            stmt.setInt(1, newItem.getItemId());
+                            stmt.setString(2, newItem.getName());
+                            //Can't forget to execute statement, or it will just not happen.
+                            stmt.executeUpdate();
+                        } catch (SQLException e) {
+                            System.err.println("Failed to insert: " + e.getMessage());
+                        }
+                    }
+                };
+
         //Makes and runs new Tomcat server.
         Tomcat server = new Tomcat();
         //Starts up localhost:8080 http connector
@@ -130,6 +173,8 @@ public class App {
         }).addMapping("/*");
         
         server.addServlet("", "itemServlet", itemServlet).addMapping("/items");
+        server.addServlet("", "cartServlet", cartServlet).addMapping("/cart");
+
 
         //Attempts to start the server, surrounded by try/catch to handle any exceptions.
         try {
