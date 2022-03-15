@@ -11,7 +11,6 @@ let listItem = function(item){
     return '<p>' + item.itemId + ": " +item.name + '</p';
 };
 
-
 let listItems = function(json){
 return `${json.map(listItem).join('\n')}`
 };
@@ -42,7 +41,7 @@ function postItem(){
 }
 
 
-/*
+
 fetch('/cart').then(resp => resp.json()).then(items => {
     document.querySelector('#cart').innerHTML = listCarts(items);
         }
@@ -51,7 +50,6 @@ fetch('/cart').then(resp => resp.json()).then(items => {
     let listCart = function(item){
         return '<p>' + item.itemId + ": " +item.name + '</p';
     };
-    
     
     let listCarts = function(json){
     return `${json.map(listCart).join('\n')}`
@@ -82,7 +80,7 @@ fetch('/cart').then(resp => resp.json()).then(items => {
         );
     }
 
-*/
+
 
 let button = document.querySelector('button');
 button.addEventListener('mouseenter', function() {
