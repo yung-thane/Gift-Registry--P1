@@ -10,6 +10,7 @@ public class App {
     public static void main(String[] args) throws SQLException{
       AppConfig beanFactoryAppConfig = new AppConfig();
         HttpServlet itemServlet = beanFactoryAppConfig.getItemController();
+        HttpServlet cartServlet = beanFactoryAppConfig.getCartController();
 
         Tomcat server = new Tomcat();
         //Starts up localhost:8080 http connector
@@ -20,6 +21,7 @@ public class App {
         //The mapping will add what comes after the /, or google.com/ThisPartHere
         server.addServlet("", "defaultServlet", new DefaultController()).addMapping("/*");
         server.addServlet("", "itemServlet", itemServlet).addMapping("/items");
+        server.addServlet("", "cartServlet", cartServlet).addMapping("/cart");
         //Attempts to start the server, surrounded by try/catch to handle any exceptions.
         try {
             server.start();
