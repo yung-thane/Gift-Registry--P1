@@ -1,13 +1,14 @@
 CREATE TABLE "item" (
     "ItemId" INT PRIMARY KEY NOT NULL,
-    "Name" VARCHAR NOT NULL
-
+    "Name" VARCHAR
 );
 
 CREATE TABLE "cart" (
-    "ItemId" INT PRIMARY KEY NOT NULL,
+    "CartId" INT NOT NULL,
     "Name" VARCHAR NOT NULL,
-    CONSTRAINT "FK_CartItemId" FOREIGN KEY ("ItemId") REFERENCES "item" ("ItemId")
+    "ItemId" INT NOT NULL,
+    CONSTRAINT "PK_Cart" PRIMARY KEY ("CartId"),
+    CONSTRAINT "FK_CartItemId" FOREIGN KEY ("ItemId") REFERENCES "item" ("ItemId") 
 );
 
 CREATE INDEX "IFK_CartItemId" ON "cart" ("ItemId");
@@ -19,4 +20,4 @@ INSERT INTO "item" VALUES (5, 'Stroller');
 INSERT INTO "item" VALUES (6, 'Mobile');
 INSERT INTO "item" VALUES (7, 'Baby Camera');
 INSERT INTO "item" VALUES (8, 'Car Seat');
-INSERT INTO "cart" VALUES (1, 'Formula');
+INSERT INTO "cart" VALUES (1, 'Formula', 1);

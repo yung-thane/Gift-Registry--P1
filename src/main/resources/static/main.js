@@ -60,6 +60,7 @@ fetch('/cart').then(resp => resp.json()).then(items => {
             "itemId": document.getElementById("itemId").value,
             "name": document.getElementById("name").value
         }
+        console.log("let item ")
         console.log(item);
         fetch("/cart", {
             method: "POST",
@@ -69,13 +70,16 @@ fetch('/cart').then(resp => resp.json()).then(items => {
             },
             body: JSON.stringify(item)
         }).then((result) => {
+            console.log("then")
             if (result.status != 200) {
+                console.log("if")
                 throw new Error("Bad Server Response");
             }
-            console.log(result.text());
+            console.log(JSON.stringify(result));
         }).catch((error) => { console.log(error); })
         fetch('/cart').then(resp => resp.json()).then(items => {
             document.querySelector('#cart').innerHTML = listCarts(items);
+            console.log("final")
             }
         );
     }
