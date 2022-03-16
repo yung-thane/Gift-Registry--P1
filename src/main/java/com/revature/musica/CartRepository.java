@@ -36,7 +36,7 @@ public class CartRepository {
             PreparedStatement stmt = connection.prepareStatement("insert into Cart values(?, ?, ?)");
             stmt.setInt(1, newItem.getItemId());
             stmt.setString(2, newItem.getName());
-            stmt.setInt(3, 1);
+            stmt.setInt(3, newItem.getItemId());
             //Can't forget to execute statement, or it will just not happen.
             stmt.executeUpdate();
         } catch (SQLException e) {

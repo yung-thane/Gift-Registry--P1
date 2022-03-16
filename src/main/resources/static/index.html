@@ -13,6 +13,11 @@
         Name: <input type="text" name="name" id="name"/>
         <button type="button" onclick="postCart()">Add Item</button>
     </form>
+    <form action="/items" method="post">
+        Id: <input type="number" name="itemId" id="itemId"/>
+        Name: <input type="text" name="name" id="name"/>
+        <button type="button" onclick="postItem()">Add Item</button>
+    </form>
     <div id="items"></div>
     <div id="cart"></div>
     <script src="main.js"></script>

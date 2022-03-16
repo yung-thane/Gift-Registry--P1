@@ -82,11 +82,37 @@ fetch('/cart').then(resp => resp.json()).then(items => {
             console.log("final")
             }
         );
+        deleteCart()
     }
-
-
+    function deleteCart(){
+        let item = {
+            "itemId": document.getElementById("itemId").value,
+            "name": document.getElementById("name").value
+        }
+        fetch("/items", {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((result) => {
+            //console.log("then")
+            if (result.status != 200) {
+                //console.log("if")
+                throw new Error("Bad Server Response");
+            }
+            console.log(JSON.stringify(result));
+        }).catch((error) => { console.log(error); })
+        fetch('/items').then(resp => resp.json()).then(items => {
+            document.querySelector('#items').innerHTML = listItems(items);
+            //console.log("final")
+            }
+        );
+    }
 
 let button = document.querySelector('button');
 button.addEventListener('mouseenter', function() {
     button.textContent = "Go!";
+})
+button.addEventListener('mouseout', function() {
+    button.textContent = "Add Item";
 })
