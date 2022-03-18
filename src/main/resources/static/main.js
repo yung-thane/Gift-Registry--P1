@@ -1,6 +1,6 @@
-var welcomeMsg = 'Welcome to the Registry!';
+//var welcomeMsg = 'Welcome to the Registry!';
 
-document.querySelector('h1').innerText = welcomeMsg;
+//document.querySelector('h1').innerText = welcomeMsg;
 
 fetch('/items').then(resp => resp.json()).then(items => {
 document.querySelector('#items').innerHTML = listItems(items);
@@ -43,24 +43,16 @@ function postItem(){
 
 
 fetch('/cart').then(resp => resp.json()).then(items => {
-    document.querySelector('#cart').innerHTML = listCarts(items);
+    document.querySelector('#cart').innerHTML = listItems(items);
         }
     );
     
-    let listCart = function(item){
-        return '<p>' + item.itemId + ": " +item.name + '</p';
-    };
-    
-    let listCarts = function(json){
-    return `${json.map(listCart).join('\n')}`
-    };
 
     function postCart(){
         let item = {
             "itemId": document.getElementById("itemId").value,
             "name": document.getElementById("name").value
         }
-        console.log("let item ")
         console.log(item);
         fetch("/cart", {
             method: "POST",
@@ -78,25 +70,26 @@ fetch('/cart').then(resp => resp.json()).then(items => {
             console.log(JSON.stringify(result));
         }).catch((error) => { console.log(error); })
         fetch('/cart').then(resp => resp.json()).then(items => {
-            document.querySelector('#cart').innerHTML = listCarts(items);
+            document.querySelector('#cart').innerHTML = listItems(items);
             console.log("final")
             }
         );
-        deleteCart()
     }
-    function deleteCart(){
+    function deleteItem(){
         let item = {
             "itemId": document.getElementById("itemId").value,
             "name": document.getElementById("name").value
         }
+        console.log(item.itemId)
         fetch("/items", {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify(item)
         }).then((result) => {
             //console.log("then")
-            if (result.status != 200) {
+            if (result.status != 200) { 
                 //console.log("if")
                 throw new Error("Bad Server Response");
             }
@@ -111,8 +104,8 @@ fetch('/cart').then(resp => resp.json()).then(items => {
 
 let button = document.querySelector('button');
 button.addEventListener('mouseenter', function() {
-    button.textContent = "Go!";
+    button.textContent = "Confirm Contribution!";
 })
 button.addEventListener('mouseout', function() {
-    button.textContent = "Add Item";
+    button.textContent = "Contribute Gift";
 })

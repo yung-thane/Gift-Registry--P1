@@ -5,21 +5,30 @@
     <title>Registry Page</title>
     <link rel="stylesheet" href="main.css">
     <link rel="icon" type="image/x-icon" href="src\main\resources\static\index.html">
+    <img src="unknown.png" id="headerimage">
 </head>
 <body>
-    <h1>asdasf</h1>
-    <form action="/cart" method="post">
+    <form action="/cart" method="post" class="button">
         Id: <input type="number" name="itemId" id="itemId"/>
         Name: <input type="text" name="name" id="name"/>
-        <button type="button" onclick="postCart()">Add Item</button>
+        <button type="button" onclick="postCart()">Contribute Gift</button>
     </form>
-    <form action="/items" method="post">
-        Id: <input type="number" name="itemId" id="itemId"/>
-        Name: <input type="text" name="name" id="name"/>
-        <button type="button" onclick="postItem()">Add Item</button>
-    </form>
-    <div id="items"></div>
-    <div id="cart"></div>
+    
+
+    <div class="grid-container">
+
+        <div class="grid-child"> 
+            <div id="items" class="table">
+                <div class="transback"></div>
+            </div>
+        </div>
+
+        <div class="grid-child">
+            <div id ="cart" class="table">
+                
+            </div>
+        </div>
+
+    </div>
     <script src="main.js"></script>
-</body>
-</html>
+    

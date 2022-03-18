@@ -21,7 +21,7 @@ public class ItemRepository {
         List<Item> items = new ArrayList<>();
                         try {
                             //Creates result set.
-                            ResultSet rs = connection.prepareStatement("Select * from Item").executeQuery();
+                            ResultSet rs = connection.prepareStatement("select * from Item").executeQuery();
                             while(rs.next()){
                                 items.add(new Item(rs.getInt("ItemId"), rs.getString("Name")));
                             }
@@ -40,6 +40,16 @@ public class ItemRepository {
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Failed to insert: " + e.getMessage());
+        }
+    }
+
+    public void deleteItem(Item newItem) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("delete from Item where id = ?");
+            stmt.setInt(1, newItem.getItemId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Failed to delete: " + e.getMessage());
         }
     }
 

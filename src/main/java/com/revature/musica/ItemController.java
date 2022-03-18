@@ -34,4 +34,12 @@ public class ItemController extends HttpServlet{
         Item newItem = mapper.readValue(req.getInputStream(), Item.class);
         itemRepository.insertItem(newItem);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Item newItem = mapper.readValue(req.getInputStream(), Item.class);
+        itemRepository.deleteItem(newItem);
+    }
+
+    
 }
