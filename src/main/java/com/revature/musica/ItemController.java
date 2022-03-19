@@ -23,22 +23,30 @@ public class ItemController extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
                 List<Item> items = itemRepository.getItems();
+                System.out.println("doGet, made array of items from itemrepo.getitems");
                
             String results = mapper.writeValueAsString(items);
+            System.out.println("doGet, made results from mapper.writeValueString(items)");
             resp.setContentType("application/json");
+            System.out.println("doGet SetcontentType to app/json");
             resp.getWriter().println(results);
+            System.out.println("doGet, resp.getWrinter.println(results)");
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Item newItem = mapper.readValue(req.getInputStream(), Item.class);
+        System.out.println("doPost, made newItem from mapper.readValue(reqgetInputStream)");
         itemRepository.insertItem(newItem);
+        System.out.println("doPost used itemRepo.inserItem using newItem");
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Item newItem = mapper.readValue(req.getInputStream(), Item.class);
+        System.out.println("doDelete, made newItem from mapper.readValue(req.getInputStream");
         itemRepository.deleteItem(newItem);
+        System.out.println("doDelete, used itemRepo.deleteItem using newItem");
     }
 
     

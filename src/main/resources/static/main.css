@@ -1,7 +1,7 @@
 body {
      /*Make sure to put parenthesis right next to url or it will not work.
      */
-    background-image: url('floral-gift.jpg')
+    background-image: url('unknown.png')
 
 }
 
@@ -18,14 +18,14 @@ body {
 
 .grid-child {
     margin: 30px;
-    border: 1px solid saddlebrown;
+    border: 3px solid saddlebrown;
 }
 
 .table {
     font-size: 30px;
     font-family: 'Brush Script MT', cursive;
     font-style: italic;
-    color: darkolivegreen;
+    color: rgb(145, 184, 78);
     margin: 5%;
     text-shadow: -1px 1px 2px #000,
                                 1px 1px 2px #000,
@@ -34,17 +34,5 @@ body {
 }
 
 .button {
-    background-color: darkseagreen;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 20px;
-    margin: 4px 2px;
-    cursor: grabbing;
-    box-shadow: inset 0px 0px 40px 40px #DBA632;
-
-
+    box-shadow: inset 0px 0px 40px 40px #1abb5d;
 }

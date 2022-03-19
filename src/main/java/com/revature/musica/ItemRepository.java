@@ -19,11 +19,16 @@ public class ItemRepository {
     
     public List<Item> getItems() {
         List<Item> items = new ArrayList<>();
+        System.out.println("get, made arraylist");
+        
                         try {
                             //Creates result set.
                             ResultSet rs = connection.prepareStatement("select * from Item").executeQuery();
+                            System.out.println("try SQL select from item statement");
+                            
                             while(rs.next()){
                                 items.add(new Item(rs.getInt("ItemId"), rs.getString("Name")));
+                                System.out.println("while, add item.add(get int(getitemid),...)");
                             }
                 } catch (SQLException e) {
                     System.err.println("Failed to retrieve from db: " + e.getSQLState());
@@ -34,8 +39,11 @@ public class ItemRepository {
     public void insertItem(Item newItem) {
         try {
             PreparedStatement stmt = connection.prepareStatement("insert into Item values(?, ?)");
+            System.out.println("try, insert stmt insert into Item (??)");
             stmt.setInt(1, newItem.getItemId());
+            System.out.println("try, setInt.newitem.getitemID");
             stmt.setString(2, newItem.getName());
+            System.out.println("try, setString.getName");
             //Can't forget to execute statement, or it will just not happen.
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -45,9 +53,13 @@ public class ItemRepository {
 
     public void deleteItem(Item newItem) {
         try {
+            System.out.println("first line of deleteItem{try{}}");
             PreparedStatement stmt = connection.prepareStatement("delete from Item where id = ?");
+            System.out.println("after delete statement");
             stmt.setInt(1, newItem.getItemId());
+            System.out.println("after setInt statement}");
             stmt.executeUpdate();
+            System.out.println("after execute update");
         } catch (SQLException e) {
             System.err.println("Failed to delete: " + e.getMessage());
         }

@@ -5,13 +5,13 @@
     <title>Registry Page</title>
     <link rel="stylesheet" href="main.css">
     <link rel="icon" type="image/x-icon" href="src\main\resources\static\index.html">
-    <img src="unknown.png" id="headerimage">
+    <img src="registry_icon.png" id="headerimage">
 </head>
 <body>
-    <form action="/cart" method="post" class="button">
+    <form action="/items" method="post">
         Id: <input type="number" name="itemId" id="itemId"/>
         Name: <input type="text" name="name" id="name"/>
-        <button type="button" onclick="postCart()">Contribute Gift</button>
+        <button type="button" onclick="deleteItem()" class="button">Contribute Gift</button>
     </form>
     
 

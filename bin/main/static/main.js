@@ -2,7 +2,10 @@
 
 //document.querySelector('h1').innerText = welcomeMsg;
 
+
+
 fetch('/items').then(resp => resp.json()).then(items => {
+
 document.querySelector('#items').innerHTML = listItems(items);
     }
 );
@@ -88,21 +91,22 @@ fetch('/cart').then(resp => resp.json()).then(items => {
             },
             body: JSON.stringify(item)
         }).then((result) => {
-            //console.log("then")
+            console.log("then")
             if (result.status != 200) { 
-                //console.log("if")
+                console.log("if")
                 throw new Error("Bad Server Response");
             }
             console.log(JSON.stringify(result));
         }).catch((error) => { console.log(error); })
         fetch('/items').then(resp => resp.json()).then(items => {
             document.querySelector('#items').innerHTML = listItems(items);
-            //console.log("final")
+            console.log("final")
             }
         );
     }
 
 let button = document.querySelector('button');
+
 button.addEventListener('mouseenter', function() {
     button.textContent = "Confirm Contribution!";
 })
