@@ -1,21 +1,21 @@
 package com.revature.musica;
 
 public class Item {
-    private int itemId;
+    private int id;
     private String name;
     
 
-    public Item(int itemId, String name) {
-        this.itemId = itemId;
+    public Item(int id, String name) {
+        this.id = id;
         this.name = name;
     }
     public Item() {
     }
-    public int getItemId() {
-        return itemId;
+    public int getid() {
+        return id;
     }
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public void setid(int id) {
+        this.id = id;
     }
     public String getName() {
         return name;
@@ -25,6 +25,6 @@ public class Item {
     }
     @Override
     public String toString() {
-        return "Item [itemId=" + itemId + ", name=" + name + "]"; 
+        return "Item [id=" + id + ", name=" + name + "]"; 
     }
 }

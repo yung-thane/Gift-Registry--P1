@@ -1,17 +1,17 @@
 CREATE TABLE "item" (
-    "ItemId" INT PRIMARY KEY NOT NULL,
+    "id" INT PRIMARY KEY NOT NULL,
     "Name" VARCHAR
 );
 
 CREATE TABLE "cart" (
     "CartId" INT NOT NULL,
     "Name" VARCHAR NOT NULL,
-    "ItemId" INT NOT NULL,
+    "id" INT NOT NULL,
     CONSTRAINT "PK_Cart" PRIMARY KEY ("CartId"),
-    CONSTRAINT "FK_CartItemId" FOREIGN KEY ("ItemId") REFERENCES "item" ("ItemId") 
+    CONSTRAINT "FK_Cartid" FOREIGN KEY ("id") REFERENCES "item" ("id") 
 );
 
-CREATE INDEX "IFK_CartItemId" ON "cart" ("ItemId");
+CREATE INDEX "IFK_Cartid" ON "cart" ("id");
 
 INSERT INTO "item" VALUES (1, 'Crib');
 INSERT INTO "item" VALUES (2, 'Bottle Set');

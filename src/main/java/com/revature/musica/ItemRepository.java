@@ -27,8 +27,8 @@ public class ItemRepository {
                             System.out.println("try SQL select from item statement");
                             
                             while(rs.next()){
-                                items.add(new Item(rs.getInt("ItemId"), rs.getString("Name")));
-                                System.out.println("while, add item.add(get int(getitemid),...)");
+                                items.add(new Item(rs.getInt("id"), rs.getString("Name")));
+                                System.out.println("while, add item.add(get int(getid),...)");
                             }
                 } catch (SQLException e) {
                     System.err.println("Failed to retrieve from db: " + e.getSQLState());
@@ -40,8 +40,8 @@ public class ItemRepository {
         try {
             PreparedStatement stmt = connection.prepareStatement("insert into Item values(?, ?)");
             System.out.println("try, insert stmt insert into Item (??)");
-            stmt.setInt(1, newItem.getItemId());
-            System.out.println("try, setInt.newitem.getitemID");
+            stmt.setInt(1, newItem.getid());
+            System.out.println("try, setInt.newitem.getid");
             stmt.setString(2, newItem.getName());
             System.out.println("try, setString.getName");
             //Can't forget to execute statement, or it will just not happen.
@@ -54,9 +54,10 @@ public class ItemRepository {
     public void deleteItem(Item newItem) {
         try {
             System.out.println("first line of deleteItem{try{}}");
-            PreparedStatement stmt = connection.prepareStatement("delete from Item where id = ?");
+            System.out.println("inside delete: " + newItem);
+            PreparedStatement stmt = connection.prepareStatement("delete from Item where item.id = ?");
             System.out.println("after delete statement");
-            stmt.setInt(1, newItem.getItemId());
+            stmt.setInt(1, newItem.getid());
             System.out.println("after setInt statement}");
             stmt.executeUpdate();
             System.out.println("after execute update");

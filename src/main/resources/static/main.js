@@ -11,7 +11,7 @@ document.querySelector('#items').innerHTML = listItems(items);
 );
 
 let listItem = function(item){
-    return '<p>' + item.itemId + ": " +item.name + '</p';
+    return '<p>' + item.id + ": " +item.name + '</p';
 };
 
 let listItems = function(json){
@@ -20,7 +20,7 @@ return `${json.map(listItem).join('\n')}`
 
 function postItem(){
     let item = {
-        "itemId": document.getElementById("itemId").value,
+        "id": document.getElementById("id").value,
         "name": document.getElementById("name").value
     }
     console.log(item);
@@ -53,7 +53,7 @@ fetch('/cart').then(resp => resp.json()).then(items => {
 
     function postCart(){
         let item = {
-            "itemId": document.getElementById("itemId").value,
+            "id": document.getElementById("id").value,
             "name": document.getElementById("name").value
         }
         console.log(item);
@@ -80,10 +80,10 @@ fetch('/cart').then(resp => resp.json()).then(items => {
     }
     function deleteItem(){
         let item = {
-            "itemId": document.getElementById("itemId").value,
+            "id": document.getElementById("id").value,
             "name": document.getElementById("name").value
         }
-        console.log(item.itemId)
+        console.log(item.id)
         fetch("/items", {
             method: "DELETE",
             headers: {

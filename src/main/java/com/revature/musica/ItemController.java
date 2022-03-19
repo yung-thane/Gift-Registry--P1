@@ -43,8 +43,11 @@ public class ItemController extends HttpServlet{
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("doDelete, init");
         Item newItem = mapper.readValue(req.getInputStream(), Item.class);
-        System.out.println("doDelete, made newItem from mapper.readValue(req.getInputStream");
+        //newItem.setid(newItem.getid());
+        System.out.println("Item: " + newItem);
+        System.out.println("Item ID: " + newItem.getid());
         itemRepository.deleteItem(newItem);
         System.out.println("doDelete, used itemRepo.deleteItem using newItem");
     }

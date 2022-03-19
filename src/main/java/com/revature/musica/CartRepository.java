@@ -23,7 +23,7 @@ public class CartRepository {
                             //Creates result set.
                             ResultSet rs = connection.prepareStatement("Select * from Cart").executeQuery();
                             while(rs.next()){
-                                items.add(new Item(rs.getInt("ItemId"), rs.getString("Name")));
+                                items.add(new Item(rs.getInt("id"), rs.getString("Name")));
                             }
                 } catch (SQLException e) {
                     System.err.println("Failed to retrieve from db: " + e.getSQLState());
@@ -34,9 +34,9 @@ public class CartRepository {
     public void insertItem(Item newItem) {
         try {
             PreparedStatement stmt = connection.prepareStatement("insert into Cart values(?, ?, ?)");
-            stmt.setInt(1, newItem.getItemId());
+            stmt.setInt(1, newItem.getid());
             stmt.setString(2, newItem.getName());
-            stmt.setInt(3, newItem.getItemId());
+            stmt.setInt(3, newItem.getid());
             //Can't forget to execute statement, or it will just not happen.
             stmt.executeUpdate();
         } catch (SQLException e) {
