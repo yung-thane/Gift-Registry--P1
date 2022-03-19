@@ -2,6 +2,7 @@
 
 //document.querySelector('h1').innerText = welcomeMsg;
 
+var dupeSet = new Set();
 
 
 fetch('/items').then(resp => resp.json()).then(items => {
@@ -57,28 +58,31 @@ fetch('/cart').then(resp => resp.json()).then(items => {
             "name": document.getElementById("name").value
         }
         console.log(item);
-        fetch("/cart", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item)
-        }).then((result) => {
-            console.log('test in post 2 ' +item)
-            console.log("then")
-            if (result.status != 200) {
-                console.log("if")
-                throw new Error("Bad Server Response");
-            }
-            console.log(JSON.stringify(result));
-            fetch('/cart').then(resp => resp.json()).then(items => {
-                document.querySelector('#cart').innerHTML = listItems(items);
-                console.log("final")
+        if(!dupeSet.has(item.id)){
+            fetch("/cart", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(item)
+            }).then((result) => {
+                console.log("then")
+                if (result.status != 200) {
+                    console.log("if")
+                    throw new Error("Bad Server Response");
                 }
-            );
-        }).catch((error) => { console.log(error); })
-        deleteItem();
+                console.log(JSON.stringify(result));
+                fetch('/cart').then(resp => resp.json()).then(items => {
+                    document.querySelector('#cart').innerHTML = listItems(items);
+                    console.log("final")
+                    dupeSet.add(item.id);
+                    console.log('test in post 2 ' + JSON.stringify(item));
+                    }
+                );
+            }).catch((error) => { console.log(error); })
+            deleteItem();
+        }
     }
     function deleteItem(){
         let item = {
