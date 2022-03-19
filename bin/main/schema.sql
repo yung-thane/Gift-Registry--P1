@@ -6,9 +6,7 @@ CREATE TABLE "item" (
 CREATE TABLE "cart" (
     "CartId" INT NOT NULL,
     "Name" VARCHAR NOT NULL,
-    "id" INT NOT NULL,
-    CONSTRAINT "PK_Cart" PRIMARY KEY ("CartId"),
-    CONSTRAINT "FK_Cartid" FOREIGN KEY ("id") REFERENCES "item" ("id") 
+    "id" INT NOT NULL
 );
 
 CREATE INDEX "IFK_Cartid" ON "cart" ("id");

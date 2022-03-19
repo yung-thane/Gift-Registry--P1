@@ -65,25 +65,27 @@ fetch('/cart').then(resp => resp.json()).then(items => {
             },
             body: JSON.stringify(item)
         }).then((result) => {
+            console.log('test in post 2 ' +item)
             console.log("then")
             if (result.status != 200) {
                 console.log("if")
                 throw new Error("Bad Server Response");
             }
             console.log(JSON.stringify(result));
+            fetch('/cart').then(resp => resp.json()).then(items => {
+                document.querySelector('#cart').innerHTML = listItems(items);
+                console.log("final")
+                }
+            );
         }).catch((error) => { console.log(error); })
-        fetch('/cart').then(resp => resp.json()).then(items => {
-            document.querySelector('#cart').innerHTML = listItems(items);
-            console.log("final")
-            }
-        );
+        deleteItem();
     }
     function deleteItem(){
         let item = {
             "id": document.getElementById("id").value,
             "name": document.getElementById("name").value
         }
-        console.log(item.id)
+        console.log('test in delete ' +item)
         fetch("/items", {
             method: "DELETE",
             headers: {
