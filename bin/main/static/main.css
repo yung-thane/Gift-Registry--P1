@@ -26,8 +26,20 @@ body {
     font-size: 30px;
     font-family: 'Brush Script MT', cursive;
     font-style: italic;
-    color: rgb(145, 184, 78);
+    color: #91b84e;
     margin: 5%;
+    text-shadow: -1px 1px 2px #000,
+                                1px 1px 2px #000,
+                                1px -1px 0 #000,
+                                -1px -1px 0 #000;
+}
+
+.tableTitle {
+    font-size: 45px;
+    margin-left: 25%;
+    font-family: 'Brush Script MT', cursive;
+    font-style: italic;
+    color: #91b84e;
     text-shadow: -1px 1px 2px #000,
                                 1px 1px 2px #000,
                                 1px -1px 0 #000,
@@ -40,6 +52,5 @@ body {
 
 .form {
     width: 50%;
-    margin: auto;
-
+    margin-left: 700px;
 }
