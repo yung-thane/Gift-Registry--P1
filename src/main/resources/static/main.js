@@ -6,7 +6,6 @@ var dupeSet = new Set();
 
 
 fetch('/items').then(resp => resp.json()).then(items => {
-
 document.querySelector('#items').innerHTML = listItems(items);
     }
 );
@@ -44,14 +43,11 @@ function postItem(){
     );
 }
 
-
-
 fetch('/cart').then(resp => resp.json()).then(items => {
     document.querySelector('#cart').innerHTML = listItems(items);
         }
     );
     
-
     function postCart(){
         let item = {
             "id": document.getElementById("id").value,
@@ -69,7 +65,7 @@ fetch('/cart').then(resp => resp.json()).then(items => {
             }).then((result) => {
                 console.log("then")
                 if (result.status != 200) {
-                    console.log("if")
+                    console.log("if") 
                     throw new Error("Bad Server Response");
                 }
                 console.log(JSON.stringify(result));
