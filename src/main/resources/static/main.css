@@ -1,11 +1,12 @@
 body {
      /*Make sure to put parenthesis right next to url or it will not work.
      */
-    background-image: url('unknown.png')
+    background-image: url('floral-gift.jpg')
 
 }
 
 #headerimage {
+    margin: auto;
     display: block;
     width: 612px;
 }
@@ -18,7 +19,7 @@ body {
 
 .grid-child {
     margin: 30px;
-    border: 5px solid saddlebrown;
+    border: 5px solid sienna;
 }
 
 .table {
@@ -34,5 +35,11 @@ body {
 }
 
 .button {
-    box-shadow: inset 0px 0px 40px 40px #1abb5d;
+    box-shadow: inset 0px 0px 40px 40px rgba(125, 184, 80, 0.63);
+}
+
+.form {
+    width: 50%;
+    margin: auto;
+
 }
