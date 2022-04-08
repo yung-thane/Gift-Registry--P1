@@ -1,3 +1,4 @@
+![Company Logo](https://revature.com/wp-content/themes/revature/imgs/logo-white-color.png "Revature")
 # Gift-Registry--P1
 
 ## Project Description
