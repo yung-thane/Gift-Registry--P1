@@ -40,7 +40,7 @@ $ mkdir Gift-Registry
 $ cd C:/Users/user/Gift-Registry
 $ git init
 $ git clone https://github.com/yung-thane/p1-musica
-$ cd C:/Users/user/Gift-Registry/p1-musica
+$ cd C:/Users/user/Gift-Registry/p1-musica/musica
 $ docker-compose build
 $ docker-compose up
 ```
@@ -51,7 +51,7 @@ $ mkdir Gift-Registry
 $ cd home/user/Gift-Registry
 $ git init
 $ git clone https://github.com/yung-thane/p1-musica
-$ cd home/user/Gift-Registry/p1-musica
+$ cd home/user/Gift-Registry/p1-musica/musica
 $ docker-compose build
 $ docker-compose up
 ```
