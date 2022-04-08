@@ -40,7 +40,6 @@ $ cd C:/Users/user/Gift-Registry
 $ git init
 $ git clone https://github.com/yung-thane/p1-musica
 $ cd C:/Users/user/Gift-Registry/p1-musica
-$ gradlew build
 $ docker-compose build
 $ docker-compose up
 ```
@@ -52,7 +51,6 @@ $ cd home/user/Gift-Registry
 $ git init
 $ git clone https://github.com/yung-thane/p1-musica
 $ cd home/user/Gift-Registry/p1-musica
-$ gradle build
 $ docker-compose build
 $ docker-compose up
 ```
